@@ -1,5 +1,8 @@
 streamlit
-pandas
-scikit-learn
 joblib
-requests
+pandas
+matplotlib
+seaborn
+plotly
+reportlab
+
