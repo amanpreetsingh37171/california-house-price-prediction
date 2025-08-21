@@ -50,8 +50,8 @@ else:
 
 
 # Replace with your actual file IDs
-model_url = "https://drive.google.com/uc?export=download&id=1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS"
-pipeline_url = "https://drive.google.com/uc?export=download&id=1XxYwzvYzYEXAMPLEIDFORPIPELINE"
+model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
+pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
 
 # Download if not already present
 if not os.path.exists("model.pkl"):
