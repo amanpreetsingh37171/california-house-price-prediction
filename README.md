@@ -34,6 +34,23 @@ This project uses a trained model and preprocessing pipeline to provide accurate
 
 ---
 
+## 🔽 Download the Models
+
+To run predictions, you'll need to download the trained model and preprocessing pipeline. These files are not included in the repository due to size constraints.
+
+### 📁 Files to Download:
+- [`model.pkl`](https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing) – Trained machine learning model  
+- [`pipeline.pkl`](https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing) – Preprocessing pipeline used during training
+
+### 📦 Instructions:
+1. Download both files from the links above.
+2. Place them in the root directory of this project (same level as `main.py`).
+3. Ensure filenames remain unchanged (`model.pkl` and `pipeline.pkl`).
+
+> ⚠️ If you rename or relocate the files, update the file paths in your scripts accordingly.
+
+---
+
 ## Requirements
 
 - Python 3.8+  
