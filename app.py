@@ -1,4 +1,6 @@
 import streamlit as st
+import os
+import urllib.request
 import joblib
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -44,6 +46,21 @@ else:
         """,
         unsafe_allow_html=True,
     )
+
+
+
+# Replace with your actual file IDs
+model_url = "https://drive.google.com/uc?export=download&id=1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS"
+pipeline_url = "https://drive.google.com/uc?export=download&id=1XxYwzvYzYEXAMPLEIDFORPIPELINE"
+
+# Download if not already present
+if not os.path.exists("model.pkl"):
+    urllib.request.urlretrieve(model_url, "model.pkl")
+
+if not os.path.exists("pipeline.pkl"):
+    urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+
+
 
 # ---------------- LOAD MODEL ----------------
 model = joblib.load("model.pkl")
