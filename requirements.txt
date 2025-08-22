@@ -1,10 +1,12 @@
 streamlit
 joblib
+scikit-learn
 pandas
 matplotlib
 seaborn
 plotly
 reportlab
 gdown
+huggingface_hub
 
 
