@@ -79,7 +79,7 @@ else:
 
 @st.cache_data(show_spinner=True)
 def load_models():
-    token = st.secrets["REMOVED_TOKEN"]
+    token = st.secrets["HUGGINGFACE_TOKEN"]
     model_path = hf_hub_download(
         repo_id="Amanpreet3023/california-house-price-model",
         filename="model.pkl",
