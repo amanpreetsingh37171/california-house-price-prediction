@@ -14,7 +14,8 @@ plotly==5.15.0
 reportlab==4.0.4
 
 # Model Loading
-huggingface_hub==0.16.4
+# huggingface_hub==0.16.4
+huggingface_hub>=0.23.0
 
 # Note: Removed gdown since you're using HuggingFace now
 

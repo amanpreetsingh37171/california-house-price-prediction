@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import urllib.request
+import subprocess, sys
 from huggingface_hub import hf_hub_download
 import joblib
 import pandas as pd
@@ -47,6 +48,24 @@ else:
         """,
         unsafe_allow_html=True,
     )
+
+
+
+
+def ensure_package(pkg, version=None):
+    try:
+        __import__(pkg)
+    except ImportError:
+        if version:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", f"{pkg}=={version}"])
+        else:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+        globals()[pkg] = __import__(pkg)
+
+# force install huggingface_hub
+ensure_package("huggingface_hub", "0.16.4")
+
+
 
 
 
