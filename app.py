@@ -49,16 +49,33 @@ else:
 
 
 
-# Replace with your actual file IDs
-model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
-pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
+# # Replace with your actual file IDs
+# model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
+# pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
 
-# Download if not already present
-if not os.path.exists("model.pkl"):
-    urllib.request.urlretrieve(model_url, "model.pkl")
+# # Download if not already present
+# if not os.path.exists("model.pkl"):
+#     urllib.request.urlretrieve(model_url, "model.pkl")
 
-if not os.path.exists("pipeline.pkl"):
-    urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+# if not os.path.exists("pipeline.pkl"):
+#     urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+
+
+from huggingface_hub import hf_hub_download
+
+# ---------------- LOAD MODEL FROM HUGGING FACE ----------------
+# Replace with your Hugging Face repo (public)
+MODEL_REPO = "your-username/california-house-price-model"   # 👈 change this
+PIPELINE_REPO = "your-username/california-house-price-pipeline"  # 👈 change this if pipeline is separate
+
+# Download files (auto-cached locally by huggingface_hub)
+model_path = hf_hub_download(repo_id=MODEL_REPO, filename="model.pkl")
+pipeline_path = hf_hub_download(repo_id=PIPELINE_REPO, filename="pipeline.pkl")
+
+# Load with joblib
+model = joblib.load(model_path)
+pipeline = joblib.load(pipeline_path)
+
 
 
 
