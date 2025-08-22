@@ -65,8 +65,8 @@ from huggingface_hub import hf_hub_download
 
 # ---------------- LOAD MODEL FROM HUGGING FACE ----------------
 # Replace with your Hugging Face repo (public)
-MODEL_REPO = "your-username/california-house-price-model"   # 👈 change this
-PIPELINE_REPO = "your-username/california-house-price-pipeline"  # 👈 change this if pipeline is separate
+MODEL_REPO = "Amanpreet3023/california-house-price-model"   # 👈 change this
+PIPELINE_REPO = "Amanpreet3023/california-house-price-pipeline"  # 👈 change this if pipeline is separate
 
 # Download files (auto-cached locally by huggingface_hub)
 model_path = hf_hub_download(repo_id=MODEL_REPO, filename="model.pkl")
