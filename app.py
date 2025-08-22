@@ -66,18 +66,36 @@ else:
 
 # ---------------- LOAD MODEL FROM HUGGING FACE ----------------
 # Replace with your Hugging Face repo (public)
-MODEL_REPO = "Amanpreet3023/california-house-price-model"
-PIPELINE_REPO = "Amanpreet3023/california-house-price-pipeline"
+# MODEL_REPO = "Amanpreet3023/california-house-price-model"
+# PIPELINE_REPO = "Amanpreet3023/california-house-price-pipeline"
 
-model_path = hf_hub_download(repo_id=MODEL_REPO, filename="model.pkl")
-pipeline_path = hf_hub_download(repo_id=PIPELINE_REPO, filename="pipeline.pkl")
-
-
-# Load with joblib
-model = joblib.load(model_path)
-pipeline = joblib.load(pipeline_path)
+# model_path = hf_hub_download(repo_id=MODEL_REPO, filename="model.pkl")
+# pipeline_path = hf_hub_download(repo_id=PIPELINE_REPO, filename="pipeline.pkl")
 
 
+# # Load with joblib
+# model = joblib.load(model_path)
+# pipeline = joblib.load(pipeline_path)
+
+@st.cache_data(show_spinner=True)
+def load_models():
+    token = st.secrets["REMOVED_TOKEN"]
+    model_path = hf_hub_download(
+        repo_id="Amanpreet3023/california-house-price-model",
+        filename="model.pkl",
+        token=token
+    )
+    pipeline_path = hf_hub_download(
+        repo_id="Amanpreet3023/california-house-price-pipeline",
+        filename="pipeline.pkl",
+        token=token
+    )
+    model = joblib.load(model_path)
+    pipeline = joblib.load(pipeline_path)
+    return model, pipeline
+
+model, pipeline = load_models()
+st.write("Models loaded successfully!")
 
 
 # ---------------- LOAD MODEL ----------------
