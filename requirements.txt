@@ -1,12 +1,32 @@
-streamlit
-joblib
+# Requirements for the project
+# Core ML and Data Processing
+streamlit==1.32.0
 scikit-learn==1.5.0
-pandas
-matplotlib
-seaborn
-plotly
-reportlab
-gdown
-huggingface_hub
+pandas==2.0.3
+joblib==1.3.2
+
+# Visualization Libraries
+matplotlib==3.7.2
+seaborn==0.12.2
+plotly==5.15.0
+
+# Report Generation
+reportlab==4.0.4
+
+# Model Loading
+huggingface_hub==0.16.4
+
+# Note: Removed gdown since you're using HuggingFace now
 
 
+
+# streamlit
+# joblib
+# scikit-learn==1.5.0
+# pandas
+# matplotlib
+# seaborn
+# plotly
+# reportlab
+# gdown
+# huggingface_hub
