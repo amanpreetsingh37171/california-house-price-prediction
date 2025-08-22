@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import urllib.request
+from huggingface_hub import hf_hub_download
 import joblib
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -61,7 +62,7 @@ else:
 #     urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
 
 
-from huggingface_hub import hf_hub_download
+
 
 # ---------------- LOAD MODEL FROM HUGGING FACE ----------------
 # Replace with your Hugging Face repo (public)
