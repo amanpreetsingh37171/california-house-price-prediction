@@ -78,21 +78,52 @@ else:
 # pipeline = joblib.load(pipeline_path)
 
 @st.cache_data(show_spinner=True)
+# def load_models():
+#     token = st.secrets["HUGGING_FACE"]["token"]
+#     model_path = hf_hub_download(
+#         repo_id="Amanpreet3023/california-house-price-model",
+#         filename="model.pkl",
+#         token=token
+#     )
+#     pipeline_path = hf_hub_download(
+#         repo_id="Amanpreet3023/california-house-price-pipeline",
+#         filename="pipeline.pkl",
+#         token=token
+#     )
+#     model = joblib.load(model_path)
+#     pipeline = joblib.load(pipeline_path)
+#     return model, pipeline
+
+
 def load_models():
-    token = st.secrets["HUGGING_FACE"]["token"]
-    model_path = hf_hub_download(
-        repo_id="Amanpreet3023/california-house-price-model",
-        filename="model.pkl",
-        token=token
-    )
-    pipeline_path = hf_hub_download(
-        repo_id="Amanpreet3023/california-house-price-pipeline",
-        filename="pipeline.pkl",
-        token=token
-    )
-    model = joblib.load(model_path)
-    pipeline = joblib.load(pipeline_path)
-    return model, pipeline
+    """Load models from HuggingFace with error handling"""
+    try:
+        with st.spinner("🔄 Loading models from HuggingFace..."):
+            # Check if secrets are available
+            if "HUGGING_FACE" in st.secrets:
+                token = st.secrets["HUGGING_FACE"]["token"]
+            else:
+                token = None  # For public repos
+            
+            model_path = hf_hub_download(
+                repo_id="Amanpreet3023/california-house-price-model",
+                filename="model.pkl",
+                token=token
+            )
+            pipeline_path = hf_hub_download(
+                repo_id="Amanpreet3023/california-house-price-pipeline",
+                filename="pipeline.pkl",
+                token=token
+            )
+            
+            model = joblib.load(model_path)
+            pipeline = joblib.load(pipeline_path)
+            
+            return model, pipeline
+    except Exception as e:
+        st.error(f"❌ Failed to load models: {str(e)}")
+        st.error("Please check if your HuggingFace repositories are public or if your token is correct.")
+        st.stop()
 
 model, pipeline = load_models()
 st.write("Models loaded successfully!")
