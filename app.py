@@ -97,7 +97,7 @@ huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
 # model = joblib.load(model_path)
 # pipeline = joblib.load(pipeline_path)
 
-@st.cache_data(show_spinner=True)
+# @st.cache_data(show_spinner=True)
 # def load_models():
 #     token = st.secrets["HUGGING_FACE"]["token"]
 #     model_path = hf_hub_download(
@@ -114,7 +114,7 @@ huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
 #     pipeline = joblib.load(pipeline_path)
 #     return model, pipeline
 
-
+@st.cache_data(show_spinner=True)
 def load_models():
     """Load models from HuggingFace with error handling"""
     try:
