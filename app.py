@@ -150,8 +150,8 @@ st.write("Models loaded successfully!")
 
 
 # ---------------- LOAD MODEL ----------------
-model = joblib.load("model.pkl")
-pipeline = joblib.load("pipeline.pkl")
+# model = joblib.load("model.pkl")
+# pipeline = joblib.load("pipeline.pkl")
 
 # ---------------- HEADER ----------------
 st.title("🏠 California House Price Prediction")
