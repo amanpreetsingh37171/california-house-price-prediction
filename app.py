@@ -385,27 +385,6 @@ with tab2:
 
 
 
-
-
-
-    # st.subheader("📊 Feature Insights")
-    # col1, col2 = st.columns(2)
-    # with col1:
-    #     st.bar_chart(input_data.T)
-
-    # with col2:
-    #     fig, ax = plt.subplots()
-    #     sns.histplot([total_rooms, total_bedrooms, households], bins=10, kde=True, ax=ax)
-    #     ax.set_title("Distribution of Rooms & Households")
-    #     st.pyplot(fig)
-
-    # fig2, ax2 = plt.subplots()
-    # ax2.pie([total_bedrooms, households, population],
-    #         labels=["Bedrooms", "Households", "Population"],
-    #         autopct="%1.1f%%")
-    # ax2.set_title("Proportion of Features")
-    # st.pyplot(fig2)
-
 # --- TAB 3: Reports ---
 with tab3:
     st.subheader("📑 Download Prediction Report")
