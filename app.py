@@ -70,9 +70,9 @@ else:
 
 
 
-# Replace with your actual file IDs
-model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
-pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
+# Google Drive direct download links (replace 'id' values with your file IDs)
+model_url = "https://drive.google.com/uc?export=download&id=1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS"
+pipeline_url = "https://drive.google.com/uc?export=download&id=1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa"
 
 # Download if not already present
 if not os.path.exists("model.pkl"):
@@ -80,6 +80,10 @@ if not os.path.exists("model.pkl"):
 
 if not os.path.exists("pipeline.pkl"):
     urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+
+# Load with joblib
+model = joblib.load("model.pkl")
+pipeline = joblib.load("pipeline.pkl")
 
 
 
