@@ -53,33 +53,33 @@ else:
 
 
 
-def ensure_package(pkg, version=None):
-    try:
-        return importlib.import_module(pkg)
-    except ImportError:
-        if version:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", f"{pkg}=={version}"])
-        else:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
-        return importlib.import_module(pkg)
+# def ensure_package(pkg, version=None):
+#     try:
+#         return importlib.import_module(pkg)
+#     except ImportError:
+#         if version:
+#             subprocess.check_call([sys.executable, "-m", "pip", "install", f"{pkg}=={version}"])
+#         else:
+#             subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
+#         return importlib.import_module(pkg)
 
-# force install huggingface_hub
-huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
-
-
+# # force install huggingface_hub
+# huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
 
 
 
-# # Replace with your actual file IDs
-# model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
-# pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
 
-# # Download if not already present
-# if not os.path.exists("model.pkl"):
-#     urllib.request.urlretrieve(model_url, "model.pkl")
 
-# if not os.path.exists("pipeline.pkl"):
-#     urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+# Replace with your actual file IDs
+model_url = "https://drive.google.com/file/d/1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS/view?usp=sharing"
+pipeline_url = "https://drive.google.com/file/d/1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa/view?usp=sharing"
+
+# Download if not already present
+if not os.path.exists("model.pkl"):
+    urllib.request.urlretrieve(model_url, "model.pkl")
+
+if not os.path.exists("pipeline.pkl"):
+    urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
 
 
 
@@ -87,39 +87,39 @@ huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
 # ---------------- LOAD MODEL FROM HUGGING FACE ----------------
 
 
-@st.cache_data(show_spinner=True)
-def load_models():
-    """Load models from HuggingFace with error handling"""
-    try:
-        with st.spinner("🔄 Loading models from HuggingFace..."):
-            # Check if secrets are available
-            if "HUGGING_FACE" in st.secrets:
-                token = st.secrets["HUGGING_FACE"]["token"]
-            else:
-                token = None  # For public repos
+# @st.cache_data(show_spinner=True)
+# def load_models():
+#     """Load models from HuggingFace with error handling"""
+#     try:
+#         with st.spinner("🔄 Loading models from HuggingFace..."):
+#             # Check if secrets are available
+#             if "HUGGING_FACE" in st.secrets:
+#                 token = st.secrets["HUGGING_FACE"]["token"]
+#             else:
+#                 token = None  # For public repos
             
-            model_path = hf_hub_download(
-                repo_id="Amanpreet3023/california-house-price-model",
-                filename="model.pkl",
-                token=token
-            )
-            pipeline_path = hf_hub_download(
-                repo_id="Amanpreet3023/california-house-price-pipeline",
-                filename="pipeline.pkl",
-                token=token
-            )
+#             model_path = hf_hub_download(
+#                 repo_id="Amanpreet3023/california-house-price-model",
+#                 filename="model.pkl",
+#                 token=token
+#             )
+#             pipeline_path = hf_hub_download(
+#                 repo_id="Amanpreet3023/california-house-price-pipeline",
+#                 filename="pipeline.pkl",
+#                 token=token
+#             )
             
-            model = joblib.load(model_path)
-            pipeline = joblib.load(pipeline_path)
+#             model = joblib.load(model_path)
+#             pipeline = joblib.load(pipeline_path)
             
-            return model, pipeline
-    except Exception as e:
-        st.error(f"❌ Failed to load models: {str(e)}")
-        st.error("Please check if your HuggingFace repositories are public or if your token is correct.")
-        st.stop()
+#             return model, pipeline
+#     except Exception as e:
+#         st.error(f"❌ Failed to load models: {str(e)}")
+#         st.error("Please check if your HuggingFace repositories are public or if your token is correct.")
+#         st.stop()
 
-model, pipeline = load_models()
-st.write("Models loaded successfully!")
+# model, pipeline = load_models()
+# st.write("Models loaded successfully!")
 
 
 # ---------------- LOAD MODEL ----------------
