@@ -98,10 +98,10 @@ print(pd.Series(random_forest_rmses).describe())
 
 
 
-# Store RMSE values for Streamlit
-rmse_results = {
-    "Linear Regression": np.mean(lin_rmses),
-    "Decision Tree Regression": np.mean(dec_rmses),
-    "Random Forest Regression": np.mean(random_forest_rmses)
-}
+# # Store RMSE values for Streamlit
+# rmse_results = {
+#     "Linear Regression": np.mean(lin_rmses),
+#     "Decision Tree Regression": np.mean(dec_rmses),
+#     "Random Forest Regression": np.mean(random_forest_rmses)
+# }
 

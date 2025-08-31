@@ -12,7 +12,7 @@ import plotly.express as px
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
-from main_old import rmse_results  # Import your RMSE dictionary
+# from main_old import rmse_results  # Import your RMSE dictionary
 
 # ---------------- CONFIG ----------------
 st.set_page_config(
@@ -240,32 +240,32 @@ with tab1:
 
 
 
-        # ----------------------------
-        # RMSE Table & Approx. Accuracy
+        # # ----------------------------
+        # # RMSE Table & Approx. Accuracy
 
-        USD_TO_INR = 83  # Conversion rate USD → INR
-        AVERAGE_PRICE_USD = 200000  # For approximate accuracy %
+        # USD_TO_INR = 83  # Conversion rate USD → INR
+        # AVERAGE_PRICE_USD = 200000  # For approximate accuracy %
 
-        # Convert dictionary to DataFrame
-        rmse_df = pd.DataFrame(rmse_results.items(), columns=["Model", "RMSE (USD)"])
-        rmse_df["RMSE (INR)"] = rmse_df["RMSE (USD)"] * USD_TO_INR
-        rmse_df["Approx. Accuracy (%)"] = (1 - rmse_df["RMSE (USD)"] / AVERAGE_PRICE_USD) * 100
+        # # Convert dictionary to DataFrame
+        # rmse_df = pd.DataFrame(rmse_results.items(), columns=["Model", "RMSE (USD)"])
+        # rmse_df["RMSE (INR)"] = rmse_df["RMSE (USD)"] * USD_TO_INR
+        # rmse_df["Approx. Accuracy (%)"] = (1 - rmse_df["RMSE (USD)"] / AVERAGE_PRICE_USD) * 100
 
-        # ----------------------------
-        # Display Table
-        st.subheader("📊 Model RMSE & Approximate Accuracy")
-        st.dataframe(rmse_df, use_container_width=True)
-        st.info("Lower RMSE indicates better predictions. Approx. Accuracy gives an intuitive sense of model performance.")
+        # # ----------------------------
+        # # Display Table
+        # st.subheader("📊 Model RMSE & Approximate Accuracy")
+        # st.dataframe(rmse_df, use_container_width=True)
+        # st.info("Lower RMSE indicates better predictions. Approx. Accuracy gives an intuitive sense of model performance.")
 
-        # ----------------------------
-        # Display Bar Chart
-        st.subheader("📊 RMSE Comparison Bar Chart")
-        fig, ax = plt.subplots(figsize=(8, 4))
-        sns.barplot(x="RMSE (USD)", y="Model", data=rmse_df, palette="viridis", ax=ax)
-        ax.set_title("Model RMSE Comparison")
-        ax.set_xlabel("RMSE (USD)")
-        ax.set_ylabel("Model")
-        st.pyplot(fig)
+        # # ----------------------------
+        # # Display Bar Chart
+        # st.subheader("📊 RMSE Comparison Bar Chart")
+        # fig, ax = plt.subplots(figsize=(8, 4))
+        # sns.barplot(x="RMSE (USD)", y="Model", data=rmse_df, palette="viridis", ax=ax)
+        # ax.set_title("Model RMSE Comparison")
+        # ax.set_xlabel("RMSE (USD)")
+        # ax.set_ylabel("Model")
+        # st.pyplot(fig)
 
 
 
