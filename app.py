@@ -197,8 +197,9 @@ tab1, tab2, tab3 = st.tabs(["📋 Input Data", "📊 Insights", "📑 Reports"])
 with tab1:
     st.subheader("📋 Input Data Section")
 
-    # Create two sub-tabs inside Input Data
-    subtab1, subtab2 = st.tabs(["🏡 Prediction", "🤖 Chatbot"])
+    # Create three sub-tabs inside Input Data
+    subtab1, subtab2, subtab3 = st.tabs(["🏡 Prediction", "🤖 Chatbot", "🧠 NLP Tasks"])
+
 
     # --- Sub-tab 1: Prediction ---
     with subtab1:
@@ -233,62 +234,127 @@ with tab1:
                 st.session_state["prediction"] = price
         
 
+    # with subtab2:
+    #     if "chat_data" not in st.session_state:
+    #         st.session_state.chat_data = []
+
+       
+    #     # Load API key from Streamlit secrets
+    #     API_KEY = st.secrets["GEMINI"]["api_key"]
+    #     genai.configure(api_key=API_KEY)
+        
+    #     model = genai.GenerativeModel("gemini-2.5-flash")
+
+
+    #     st.header("My Personal AI Chatbot")
+
+    #     st.subheader("Ask me anything!")
+
+    #     user_input = st.chat_input("write your query")
+
+    #     if user_input:
+
+    #         st.session_state.chat_data.append(("User", user_input))
+
+    #         if "who build you" in user_input or "who developed you" in user_input:
+
+    #             response = "I am AI Model developed by Aman"
+
+    #             st.session_state.chat_data.append(("AI", response))
+
+
+    #         elif "open Youtube" in user_input:
+    #             webbrowser.open("https://www.youtube.com")
+
+    #             response = "Opening YouTube for you!"
+
+    #             st.session_state.chat_data.append(("AI", response))
+
+
+    #         elif "open Google" in user_input:
+    #             webbrowser.open("https://www.google.com")
+
+    #             response = "Opening Google for you!"
+
+    #             st.session_state.chat_data.append(("AI", response))
+
+    #         else:
+    #             response = model.generate_content(user_input)
+
+    #             st.session_state.chat_data.append(("AI", response.text))
+
+
+    #     for key, data in st.session_state.chat_data:
+    #         with st.chat_message(key):
+    #             st.markdown(data)
     with subtab2:
         if "chat_data" not in st.session_state:
             st.session_state.chat_data = []
 
-       
-        # Load API key from Streamlit secrets
-        API_KEY = st.secrets["GEMINI"]["api_key"]
-        genai.configure(api_key=API_KEY)
-        
+        # Load API key from secrets.toml
+        import google.generativeai as genai
+        genai.configure(api_key=st.secrets["GEMINI"]["api_key"])
+
         model = genai.GenerativeModel("gemini-2.5-flash")
 
-
-        st.header("My Personal AI Chatbot")
-
+        st.header("🤖 Project Chatbot")
         st.subheader("Ask me anything!")
 
-        user_input = st.chat_input("write your query")
+        # User input
+        user_input = st.text_input("💬 Type your question here:")
 
-        if user_input:
+        # Button to submit query
+        if st.button("🚀 Ask"):
+            if user_input:
+                st.session_state.chat_data.append(("User", user_input))
+            
+                try:
+                    # Call Gemini AI
+                    response = model.generate_content(user_input)
+                    st.session_state.chat_data.append(("AI", response.text))
+                except Exception as e:
+                    st.session_state.chat_data.append(("AI", f"❌ Error: {str(e)}"))
 
-            st.session_state.chat_data.append(("User", user_input))
-
-            if "who build you" in user_input or "who developed you" in user_input:
-
-                response = "I am AI Model developed by Aman"
-
-                st.session_state.chat_data.append(("AI", response))
-
-
-            elif "open Youtube" in user_input:
-                webbrowser.open("https://www.youtube.com")
-
-                response = "Opening YouTube for you!"
-
-                st.session_state.chat_data.append(("AI", response))
-
-
-            elif "open Google" in user_input:
-                webbrowser.open("https://www.google.com")
-
-                response = "Opening Google for you!"
-
-                st.session_state.chat_data.append(("AI", response))
-
-            else:
-                response = model.generate_content(user_input)
-
-                st.session_state.chat_data.append(("AI", response.text))
+        # Display chat history
+        for sender, message in st.session_state.chat_data:
+            with st.chat_message(sender):
+                st.markdown(message)
 
 
-        for key, data in st.session_state.chat_data:
-            with st.chat_message(key):
-                st.markdown(data)
- 
- 
 
+    with subtab3:
+        st.subheader("🧠 NLP Tasks")
+
+        if "nlp_history" not in st.session_state:
+            st.session_state.nlp_history = []
+
+        # Input box
+        nlp_input = st.text_area("Enter text for NLP task:")
+
+        task_type = st.selectbox("Choose NLP Task:", ["Summarization", "Sentiment Analysis", "Keyword Extraction"])
+
+        if st.button("🚀 Run NLP Task"):
+            if nlp_input:
+                try:
+                    # Call Gemini model
+                    model = genai.GenerativeModel("gemini-2.5-flash")
+                    prompt = f"Perform {task_type} on the following text:\n{nlp_input}"
+                    response = model.generate_content(prompt)
+
+                    # Save history
+                    st.session_state.nlp_history.append(("Input", nlp_input))
+                    st.session_state.nlp_history.append(("Output", response.text))
+
+                except Exception as e:
+                    st.error(f"❌ Error: {str(e)}")
+
+        # Display NLP history
+        if st.session_state.nlp_history:
+            for role, text in st.session_state.nlp_history:
+                if role == "Input":
+                    st.markdown(f"**📝 Input:** {text}")
+                else:
+                    st.markdown(f"**💡 Output:** {text}")
 
 
 
