@@ -14,6 +14,9 @@ import re
 import json
 import threading 
 import time
+from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
+import speech_recognition as sr
+import queue
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -231,62 +234,10 @@ with tab1:
             else:
                 st.info("🏡 Premium & Expensive Location")
 
-                st.session_state["prediction"] = price
-        
-
-    # with subtab2:
-    #     if "chat_data" not in st.session_state:
-    #         st.session_state.chat_data = []
-
-       
-    #     # Load API key from Streamlit secrets
-    #     API_KEY = st.secrets["GEMINI"]["api_key"]
-    #     genai.configure(api_key=API_KEY)
-        
-    #     model = genai.GenerativeModel("gemini-2.5-flash")
+                st.session_state["prediction"] = price 
 
 
-    #     st.header("My Personal AI Chatbot")
 
-    #     st.subheader("Ask me anything!")
-
-    #     user_input = st.chat_input("write your query")
-
-    #     if user_input:
-
-    #         st.session_state.chat_data.append(("User", user_input))
-
-    #         if "who build you" in user_input or "who developed you" in user_input:
-
-    #             response = "I am AI Model developed by Aman"
-
-    #             st.session_state.chat_data.append(("AI", response))
-
-
-    #         elif "open Youtube" in user_input:
-    #             webbrowser.open("https://www.youtube.com")
-
-    #             response = "Opening YouTube for you!"
-
-    #             st.session_state.chat_data.append(("AI", response))
-
-
-    #         elif "open Google" in user_input:
-    #             webbrowser.open("https://www.google.com")
-
-    #             response = "Opening Google for you!"
-
-    #             st.session_state.chat_data.append(("AI", response))
-
-    #         else:
-    #             response = model.generate_content(user_input)
-
-    #             st.session_state.chat_data.append(("AI", response.text))
-
-
-    #     for key, data in st.session_state.chat_data:
-    #         with st.chat_message(key):
-    #             st.markdown(data)
     with subtab2:
         if "chat_data" not in st.session_state:
             st.session_state.chat_data = []
@@ -313,14 +264,14 @@ with tab1:
                     response = model.generate_content(user_input)
                     st.session_state.chat_data.append(("AI", response.text))
                 except Exception as e:
-                    st.session_state.chat_data.append(("AI", f"❌ Error: {str(e)}"))
+                 st.session_state.chat_data.append(("AI", f"❌ Error: {str(e)}"))
 
-        # Display chat history
-        for sender, message in st.session_state.chat_data:
-            with st.chat_message(sender):
-                st.markdown(message)
+    # Display chat history
+    for sender, message in st.session_state.chat_data:
+        with st.chat_message(sender):
+            st.markdown(message)
 
-
+    
 
     with subtab3:
         st.subheader("🧠 NLP Tasks")
