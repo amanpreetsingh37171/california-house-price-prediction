@@ -7,6 +7,8 @@ seaborn==0.12.2
 plotly==5.15.0
 reportlab==4.0.4
 huggingface_hub==0.16.4
+google-generativeai==0.8.5
+simple_webbrowser==0.2.2
 
 # Notes:
 # - Core ML and data handling: scikit-learn, pandas, joblib

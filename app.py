@@ -5,13 +5,23 @@ import subprocess, sys
 import importlib
 from huggingface_hub import hf_hub_download
 import joblib
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
+import re
+import json
+import threading 
+import time
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+import google.generativeai as genai
+import webbrowser
+# Configure Gemini (securely via Streamlit secrets)
+genai.configure(api_key=st.secrets["GEMINI"])
+
 # from main_old import rmse_results  # Import your RMSE dictionary
 
 # ---------------- CONFIG ----------------
@@ -185,35 +195,99 @@ tab1, tab2, tab3 = st.tabs(["📋 Input Data", "📊 Insights", "📑 Reports"])
 
 # --- TAB 1: Input Data ---
 with tab1:
-    st.subheader("📋 Input Features Preview")
-    st.dataframe(input_data, use_container_width=True)
+    st.subheader("📋 Input Data Section")
 
-    if st.button("🚀 Predict House Price"):
-        transformed_data = pipeline.transform(input_data)
-        prediction = model.predict(transformed_data)
-        price = prediction[0]
+    # Create two sub-tabs inside Input Data
+    subtab1, subtab2 = st.tabs(["🏡 Prediction", "🤖 Chatbot"])
 
-        st.success("✅ Prediction Complete!")
+    # --- Sub-tab 1: Prediction ---
+    with subtab1:
+        st.subheader("📋 Input Features Preview")
+        st.dataframe(input_data, use_container_width=True)
 
-        # Display result card
-        st.metric(label="💰 Predicted House Price", value=f"${price:,.2f}")
-        # Convert to Indian Rupees (example rate: 1 USD = 83 INR)
-        usd_to_inr = 83
-        price_inr = price * usd_to_inr
+        if st.button("🚀 Predict House Price"):
+            transformed_data = pipeline.transform(input_data)
+            prediction = model.predict(transformed_data)
+            price = prediction[0]
 
-        # Display in INR
-        st.metric(label="💴 Predicted House Price (INR)", value=f"₹{price_inr:,.2f}")
+            st.success("✅ Prediction Complete!")
+
+            # Display result card
+            st.metric(label="💰 Predicted House Price", value=f"${price:,.2f}")
+            # Convert to Indian Rupees (example rate: 1 USD = 83 INR)
+            usd_to_inr = 83
+            price_inr = price * usd_to_inr
+
+            # Display in INR
+            st.metric(label="💴 Predicted House Price (INR)", value=f"₹{price_inr:,.2f}")
 
 
-        # Interpretation
-        if price < 100000:
-            st.info("🏚 Very Affordable Housing Area")
-        elif 100000 <= price < 300000:
-            st.info("🏠 Standard Mid-Range Housing")
-        else:
-            st.info("🏡 Premium & Expensive Location")
+            # Interpretation
+            if price < 100000:
+                st.info("🏚 Very Affordable Housing Area")
+            elif 100000 <= price < 300000:
+                st.info("🏠 Standard Mid-Range Housing")
+            else:
+                st.info("🏡 Premium & Expensive Location")
 
-        st.session_state["prediction"] = price
+                st.session_state["prediction"] = price
+        
+
+    with subtab2:
+        if "chat_data" not in st.session_state:
+            st.session_state.chat_data = []
+
+        API_KEY = "AIzaSyDz7SyGVQ7Xe-2_kJfXR6bsT9BZAr4uvPU"
+
+        genai.configure(api_key = API_KEY)
+
+        model = genai.GenerativeModel("gemini-2.5-flash")
+
+
+        st.header("My Personal AI Chatbot")
+
+        st.subheader("Ask me anything!")
+
+        user_input = st.chat_input("write your query")
+
+        if user_input:
+
+            st.session_state.chat_data.append(("User", user_input))
+
+            if "who build you" in user_input or "who developed you" in user_input:
+
+                response = "I am AI Model developed by Aman"
+
+                st.session_state.chat_data.append(("AI", response))
+
+
+            elif "open Youtube" in user_input:
+                webbrowser.open("https://www.youtube.com")
+
+                response = "Opening YouTube for you!"
+
+                st.session_state.chat_data.append(("AI", response))
+
+
+            elif "open Google" in user_input:
+                webbrowser.open("https://www.google.com")
+
+                response = "Opening Google for you!"
+
+                st.session_state.chat_data.append(("AI", response))
+
+            else:
+                response = model.generate_content(user_input)
+
+                st.session_state.chat_data.append(("AI", response.text))
+
+
+        for key, data in st.session_state.chat_data:
+            with st.chat_message(key):
+                st.markdown(data)
+ 
+ 
+
 
 
 
