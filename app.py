@@ -81,18 +81,7 @@ else:
 
 
 # ---------------- CACHE MODEL LOADING ----------------
-@st.cache_resource
-def load_models():
-    """Load compressed model + pipeline only once"""
-    # Ensure compressed versions exist
-    create_compressed_models()
-    
-    model = joblib.load("model.pkl")
-    pipeline = joblib.load("pipeline.pkl")
-    return model, pipeline
 
-# Load once, cached
-model, pipeline = load_models()
 
 
 
