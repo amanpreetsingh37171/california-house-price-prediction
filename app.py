@@ -87,8 +87,8 @@ def load_models():
     # Ensure compressed versions exist
     create_compressed_models()
     
-    model = joblib.load("model_compressed.pkl")
-    pipeline = joblib.load("pipeline_compressed.pkl")
+    model = joblib.load("model.pkl")
+    pipeline = joblib.load("pipeline.pkl")
     return model, pipeline
 
 # Load once, cached
