@@ -80,6 +80,22 @@ else:
 # huggingface_hub = ensure_package("huggingface_hub", "0.16.4")
 
 
+# ---------------- CACHE MODEL LOADING ----------------
+@st.cache_resource
+def load_models():
+    """Load compressed model + pipeline only once"""
+    # Ensure compressed versions exist
+    create_compressed_models()
+    
+    model = joblib.load("model_compressed.pkl")
+    pipeline = joblib.load("pipeline_compressed.pkl")
+    return model, pipeline
+
+# Load once, cached
+model, pipeline = load_models()
+
+
+
 def create_compressed_models():
     """Create physically smaller model files - run once"""
     if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
