@@ -85,26 +85,26 @@ else:
 
 
 
-def create_compressed_models():
-    """Create physically smaller model files - run once"""
-    if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
-        return  # Already compressed
+# def create_compressed_models():
+#     """Create physically smaller model files - run once"""
+#     if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
+#         return  # Already compressed
     
-    # Load original models
-    if os.path.exists("model.pkl") and os.path.exists("pipeline.pkl"):
-        model = joblib.load("model.pkl")
-        pipeline = joblib.load("pipeline.pkl")
+#     # Load original models
+#     if os.path.exists("model.pkl") and os.path.exists("pipeline.pkl"):
+#         model = joblib.load("model.pkl")
+#         pipeline = joblib.load("pipeline.pkl")
         
-        # ⚠️ Removed: tree_.value precision reduction (not allowed in sklearn)
+#         # ⚠️ Removed: tree_.value precision reduction (not allowed in sklearn)
 
-        # Save with maximum compression
-        joblib.dump(model, "model_compressed.pkl", compress=9)
-        joblib.dump(pipeline, "pipeline_compressed.pkl", compress=9)
+#         # Save with maximum compression
+#         joblib.dump(model, "model_compressed.pkl", compress=9)
+#         joblib.dump(pipeline, "pipeline_compressed.pkl", compress=9)
         
-        # Show size comparison
-        original_size = (os.path.getsize("model.pkl") + os.path.getsize("pipeline.pkl")) / (1024*1024)
-        compressed_size = (os.path.getsize("model_compressed.pkl") + os.path.getsize("pipeline_compressed.pkl")) / (1024*1024)
-        st.success(f"✅ Models compressed: {original_size:.1f}MB → {compressed_size:.1f}MB")
+#         # Show size comparison
+#         original_size = (os.path.getsize("model.pkl") + os.path.getsize("pipeline.pkl")) / (1024*1024)
+#         compressed_size = (os.path.getsize("model_compressed.pkl") + os.path.getsize("pipeline_compressed.pkl")) / (1024*1024)
+#         st.success(f"✅ Models compressed: {original_size:.1f}MB → {compressed_size:.1f}MB")
 
 
 
@@ -152,26 +152,26 @@ def create_compressed_models():
 # pipeline = joblib.load("pipeline.pkl")
 
 
-# Create compressed models first
-create_compressed_models()
+# # Create compressed models first
+# create_compressed_models()
 
-# Load compressed models
-if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
-    model = joblib.load("model_compressed.pkl")
-    pipeline = joblib.load("pipeline_compressed.pkl")
-else:
-    # Fallback to original Google Drive download
-    model_url = "https://drive.google.com/uc?export=download&id=1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS"
-    pipeline_url = "https://drive.google.com/uc?export=download&id=1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa"
+# # Load compressed models
+# if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
+#     model = joblib.load("model_compressed.pkl")
+#     pipeline = joblib.load("pipeline_compressed.pkl")
+# else:
+#     # Fallback to original Google Drive download
+#     model_url = "https://drive.google.com/uc?export=download&id=1cUe2WADBh9-QeGmKsgl9xJpBtKWS93vS"
+#     pipeline_url = "https://drive.google.com/uc?export=download&id=1TvWSbniMF3vhlR78qIKlWvk5fzw3BRWa"
     
-    if not os.path.exists("model.pkl"):
-        urllib.request.urlretrieve(model_url, "model.pkl")
-    if not os.path.exists("pipeline.pkl"):
-        urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
+#     if not os.path.exists("model.pkl"):
+#         urllib.request.urlretrieve(model_url, "model.pkl")
+#     if not os.path.exists("pipeline.pkl"):
+#         urllib.request.urlretrieve(pipeline_url, "pipeline.pkl")
     
-    create_compressed_models()  # Compress after download
-    model = joblib.load("model_compressed.pkl")
-    pipeline = joblib.load("pipeline_compressed.pkl")
+#     create_compressed_models()  # Compress after download
+#     model = joblib.load("model_compressed.pkl")
+#     pipeline = joblib.load("pipeline_compressed.pkl")
 
 
 # ---------------- LOAD MODEL FROM HUGGING FACE ----------------
@@ -213,8 +213,8 @@ else:
 
 
 # ---------------- LOAD MODEL ----------------
-# model = joblib.load("model.pkl")
-# pipeline = joblib.load("pipeline.pkl")
+model = joblib.load("model.pkl")
+pipeline = joblib.load("pipeline.pkl")
 
 # ---------------- HEADER ----------------
 st.title("🏠 California House Price Prediction")
@@ -228,12 +228,12 @@ This app predicts the estimated **median house value** based on important factor
 st.markdown("---")
 
 
-# Add this after st.markdown("---") 
-if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
-    model_size = os.path.getsize("model_compressed.pkl") / (1024*1024)
-    pipeline_size = os.path.getsize("pipeline_compressed.pkl") / (1024*1024)
-    total_size = model_size + pipeline_size
-    st.info(f"📦 Compressed models loaded: {total_size:.1f}MB")
+# # Add this after st.markdown("---") 
+# if os.path.exists("model_compressed.pkl") and os.path.exists("pipeline_compressed.pkl"):
+#     model_size = os.path.getsize("model_compressed.pkl") / (1024*1024)
+#     pipeline_size = os.path.getsize("pipeline_compressed.pkl") / (1024*1024)
+#     total_size = model_size + pipeline_size
+#     st.info(f"📦 Compressed models loaded: {total_size:.1f}MB")
 
 
 # ---------------- SIDEBAR ----------------
