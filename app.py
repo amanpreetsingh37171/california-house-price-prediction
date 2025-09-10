@@ -213,8 +213,18 @@ else:
 
 
 # ---------------- LOAD MODEL ----------------
-model = joblib.load("model.pkl")
-pipeline = joblib.load("pipeline.pkl")
+# model = joblib.load("model.pkl")
+# pipeline = joblib.load("pipeline.pkl")
+
+# Minimal joblib-only loading
+try:
+    model = joblib.load("model.pkl")
+    pipeline = joblib.load("pipeline.pkl")
+    st.success("✅ Models loaded successfully")
+except Exception as e:
+    st.error(f"❌ Failed to load models: {e}")
+    st.stop()
+
 
 # ---------------- HEADER ----------------
 st.title("🏠 California House Price Prediction")
