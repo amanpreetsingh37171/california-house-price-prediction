@@ -1,15 +1,17 @@
-streamlit==1.32.0
-scikit-learn==1.5.0
+streamlit==1.28.0
+numpy==1.24.3
 pandas==2.0.3
-joblib==1.3.2
 matplotlib==3.7.2
 seaborn==0.12.2
 plotly==5.15.0
-reportlab==4.0.4
+joblib==1.3.2
+scikit-learn==1.3.2
 huggingface_hub==0.16.4
-google-generativeai==0.8.5
-simple_webbrowser==0.2.2
-
+google-generativeai==0.5.4
+reportlab==4.0.4
+streamlit-webrtc==0.45.1
+SpeechRecognition==3.10.0
+protobuf==3.20.3
 # Notes:
 # - Core ML and data handling: scikit-learn, pandas, joblib
 # - Streamlit for UI
