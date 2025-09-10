@@ -14,7 +14,6 @@ import re
 import json
 import threading 
 import time
-import speech_recognition as sr
 import queue
 from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
